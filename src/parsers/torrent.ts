@@ -1,32 +1,50 @@
 import * as cheerio from "cheerio";
 import { rereferer } from "../helpers/functions";
-import Torrent from "../classes/Torrent";
+import Torrent, { Category } from "../classes/Torrent";
 import fetch from "node-fetch";
 import * as fs from "fs";
 import UrlQueryManager from "../classes/api/UrlQueryManager";
+
+const categoryIds: { [key: string]: Category } = {
+    xvid_hun: { Film: "SD/HU" },
+    xvid: { Film: "SD/EN" },
+    dvd_hun: { Film: "DVDR/HU" },
+    dvd: { Film: "DVDR/EN" },
+    dvd9_hun: { Film: "DVD9/HU" },
+    dvd9: { Film: "DVD9/EN" },
+    hd_hun: { Film: "HD/HU" },
+    hd: { Film: "HD/EN" },
+    xvidser_hun: { Sorozat: "SD/HU" },
+    xvidser: { Sorozat: "SD/EN" },
+    dvdser_hun: { Sorozat: "DVDR/HU" },
+    dvdser: { Sorozat: "DVDR/EN" },
+    hdser_hun: { Sorozat: "HD/HU" },
+    hdser: { Sorozat: "HD/EN" },
+    mp3_hun: { Zene: "MP3/HU" },
+    mp3: { Zene: "MP3/EN" },
+    lossless_hun: { Zene: "Lossless/HU" },
+    lossless: { Zene: "Lossless/EN" },
+    clip: { Zene: "Klip" },
+    xxx_xvid: { XXX: "SD" },
+    xxx_dvd: { XXX: "DVDR" },
+    xxx_imageset: { XXX: "Imageset" },
+    xxx_hd: { XXX: "HD" },
+    game_iso: { Játék: "PC/ISO" },
+    game_rip: { Játék: "PC/RIP" },
+    console: { Játék: "Konzol" },
+    iso: { Program: "Prog/ISO" },
+    misc: { Program: "Prog/RIP" },
+    mobile: { Program: "Prog/Mobil" },
+    ebook_hun: { Könyv: "eBook/HU" },
+    ebook: { Könyv: "eBook/EN" },
+};
 
 export type ParsedTorrent = {
     id: number;
     title: string;
     images: { src: string; aspectRatio: string; width: number; height: number }[];
     properties: {
-        category: {
-            Film?:
-                | "SD/HU"
-                | "SD/EN"
-                | "DVDR/HU"
-                | "DVDR/EN"
-                | "DVD9/HU"
-                | "DVD9/EN"
-                | "HD/HU"
-                | "HD/EN";
-            Sorozat?: "SD/HU" | "SD/EN" | "DVDR/HU" | "DVDR/EN" | "HD/HU" | "HD/EN";
-            Zene?: "MP3/HU" | "MP3/EN" | "Lossless/HU" | "Lossless/EN" | "Klip";
-            XXX?: "SD" | "DVDR" | "Imageset" | "HD";
-            Játék?: "PC/ISO" | "PC/RIP" | "Konzol";
-            Program?: "Prog/ISO" | "Prog/RIP" | "Prog/Mobil";
-            Könyv?: "eBook/HU" | "eBook/EN";
-        };
+        category: Category;
         uploadTime: string;
         uploader: "Anonymous" | string;
         comments: number;
@@ -143,7 +161,8 @@ export default function ParseTorrent(html: string): ParsedTorrent {
         requestId: propertyParser()["Kérés"] ? parseInt(propertyParser()["Kérés"]) : undefined,
         seeders: parseInt(propertyParser()["Seederek"]),
         leechers: parseInt(propertyParser()["Leecherek"]),
-        downloadRating: propertyParser()["Letöltve"].split(``).length,
+        downloadRating:
+            propertyParser()["Letöltve"] == "0" ? 0 : propertyParser()["Letöltve"].split(``).length,
         downloadSpeed: propertyParser()["Sebesség"].split(` `, 2).join(` `),
         size: propertyParser()["Méret"].split(` `, 2).join(` `),
         files: parseInt(propertyParser()["Fájlok"]),
@@ -221,46 +240,155 @@ export default function ParseTorrent(html: string): ParsedTorrent {
     };
 }
 
-// async function test(id: string | number) {
-//     const res = await fetch(`https://ncore.pro/torrents.php?action=details&id=${id}`, {
-//         headers: {
-//             accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-//             "accept-language": "en-US,en;q=0.9",
-//             "cache-control": "no-cache",
-//             pragma: "no-cache",
-//             priority: "u=0, i",
-//             "sec-ch-ua": '"Not/A)Brand";v="8", "Chromium";v="126"',
-//             "sec-ch-ua-mobile": "?0",
-//             "sec-ch-ua-platform": '"Windows"',
-//             "sec-fetch-dest": "document",
-//             "sec-fetch-mode": "navigate",
-//             "sec-fetch-site": "none",
-//             "sec-fetch-user": "?1",
-//             "upgrade-insecure-requests": "1",
-//             cookie: "adblock_tested=false; adblock_stat=1; __utma=249006360.1373197927.1720318485.1720318485.1720318485.1; __utmc=249006360; __utmz=249006360.1720318485.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); PHPSESSID=6c241b7cdb9ec5d8a3666544b3811657; nick=bajekek; pass=b26e1c17e44839e4be00f232e134734b; nyelv=hu; stilus=light",
-//             referrerPolicy: "strict-origin-when-cross-origin",
-//         },
-//         body: null,
-//         method: "GET",
-//     });
-//     const html = await res.text();
-//     fs.writeFileSync(
-//         "./src/parsers/complete.json",
-//         JSON.stringify(module.exports(html), null, 4),
-//         "utf8"
-//     );
-//     //return module.exports(html);
-// }
+export type ParsedBoxTorrent = {
+    id: number;
+    title: string;
+    product: {
+        title: string;
+    };
+    imdb: {
+        url: string;
+        rating: number;
+    };
+    thumbnail: string;
+    category: Category;
+    status: "checked" | "unchecked" | "err";
+    uploadTime: string;
+    size: string;
+    downloadRating: number;
+    seeders: number;
+    leechers: number;
+    uploader: string;
+};
 
-// test(3644485);
+export function ParseBoxTorrent(html: string): ParsedBoxTorrent {
+    const $ = cheerio.load(html);
 
-// require("fs").writeFileSync(
-//     "./src/parsers/complete.json",
-//     JSON.stringify(
-//         module.exports(require("fs").readFileSync("./src/parsers/site.html", "utf8")),
-//         0,
-//         4
-//     ),
-//     "utf8"
-// );
-// console.log(module.exports(require("fs").readFileSync("./src/parsers/site.html", "utf8")));
+    const title = $(
+        "div.box_nagy > div.box_nev2 > div.tabla_szoveg > div.torrent_txt > a > nobr"
+    ).text();
+    const product = {
+        title: $(
+            "div.box_nagy > div.box_nev2 > div.tabla_szoveg > div.torrent_txt > div > div.siterank > span"
+        ).text(),
+    };
+    const imdb = {
+        url: rereferer(
+            $(
+                "div.box_nagy > div.box_nev2 > div.tabla_szoveg > div.torrent_txt > div > div.siterank > a"
+            ).attr("href")
+        ),
+        rating: parseFloat(
+            $(
+                "div.box_nagy > div.box_nev2 > div.tabla_szoveg > div.torrent_txt > div > div.siterank > a"
+            )
+                .text()
+                .split(" ")[1]
+        ),
+    };
+    const thumbnail = $(
+        "div.box_nagy > div.box_nev2 > div.tabla_szoveg > div.torrent_txt > div > div.infobar > img"
+    )
+        .attr("onmouseover")
+        ?.split("'")[1];
+    const id = parseInt(
+        new UrlQueryManager()
+            .setQueryFromUrl(
+                $("div.box_nagy > div.box_nev2 > div.tabla_szoveg > div.torrent_txt > a").attr(
+                    "href"
+                )
+            )
+            .getQueryValue("id")
+    );
+    const category =
+        categoryIds[
+            new UrlQueryManager()
+                .setQueryFromUrl($("div.box_alap_img > a").attr("href"))
+                .getQueryValue("tipus")
+        ];
+
+    const status = (() => {
+        const status = $("body > div > div.box_nagy > div.box_nev2 > div:nthChild(3)").attr(
+            "class"
+        );
+        if (status == "torrent_ok") return "checked";
+        if (status == "torrent_unchecked") return "unchecked";
+        return "err";
+    })();
+
+    const uploadTime = $("div.box_nagy > div.box_feltoltve2").text().replace("\n", " ");
+    const size = $("div.box_nagy > div.box_meret2").text();
+
+    const downloadRating =
+        $("div.box_nagy > div.box_d2").text() == "0"
+            ? 0
+            : $("div.box_nagy > div.box_d2").text().split(``).length;
+    const seeders = parseInt($("div.box_nagy > div.box_s2").text());
+    const leechers = parseInt($("div.box_nagy > div.box_l2").text());
+    const uploader = $("div.box_nagy > div.box_feltolto2 > a > span").text();
+    return {
+        id,
+        title,
+        product,
+        imdb,
+        thumbnail,
+        category,
+        status,
+        uploadTime,
+        size,
+        downloadRating,
+        seeders,
+        leechers,
+        uploader,
+    };
+}
+
+export type ParsedMiniBoxTorrent = {
+    id: number;
+    title: string;
+    category: Category;
+    uploadTime: string;
+    size: string;
+    downloadRating: number;
+    seeders: number;
+    leechers: number;
+};
+
+export function ParseMiniBoxTorrent(html: string): ParsedMiniBoxTorrent {
+    const $ = cheerio.load(html);
+
+    const title = $("div.box_nagy_mini > div.box_nev_mini_ownfree > div > div > a").attr("title");
+    const id = parseInt(
+        new UrlQueryManager()
+            .setQueryFromUrl(
+                $("div.box_nagy_mini > div.box_nev_mini_ownfree > div > div > a").attr("href")
+            )
+            .getQueryValue("id")
+    );
+    const category =
+        categoryIds[
+            new UrlQueryManager()
+                .setQueryFromUrl($("div.box_alap_img > a").attr("href"))
+                .getQueryValue("tipus")
+        ];
+    const uploadTimeStr = $("div.box_nagy_mini > div.box_feltoltve_other_short").text();
+    const uploadTime = uploadTimeStr.substring(0, 10) + " " + uploadTimeStr.substring(10);
+    //.replace("\n", " ");
+    const size = $("div.box_nagy_mini > div.box_meret2").text();
+    const downloadRating =
+        $("div.box_nagy_mini > div.box_d2").text() == "0"
+            ? 0
+            : $("div.box_nagy_mini > div.box_d2").text().split(``).length;
+    const seeders = parseInt($("div.box_nagy_mini > div.box_s2").text());
+    const leechers = parseInt($("div.box_nagy_mini > div.box_l2").text());
+    return {
+        id,
+        title,
+        category,
+        uploadTime,
+        size,
+        downloadRating,
+        seeders,
+        leechers,
+    };
+}

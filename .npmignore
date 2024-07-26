@@ -1,6 +1,7 @@
 src/
 lib/
 node_modules/
+wiki/
 
 .npmignore
 .gitignore

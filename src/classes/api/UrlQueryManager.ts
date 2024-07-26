@@ -1,5 +1,3 @@
-const { AddToFunctions } = require("../../..");
-
 class UrlQueryManager {
     #query: { [key: string]: any };
     constructor() {
@@ -64,9 +62,6 @@ class UrlQueryManager {
         return this;
     }
 
-    /**
-     * @returns {AddToFunctions}
-     */
     get addTo(): {
         url: (url: string) => string;
     } {

@@ -1,13 +1,16 @@
 import * as cheerio from "cheerio";
 import HtmlTableToJson from "../helpers/HtmlTableToJson";
+import { Category, MiniBoxTorrent } from "../classes/Torrent";
+import { ParsedMiniBoxTorrent, ParseMiniBoxTorrent } from "./torrent";
+import API from "../classes/api/API";
 
-function parseNfo(html: string): string {
+export function parseNfo(html: string): string {
     const $ = cheerio.load(html);
     const nfo = $(`body > div.torrent_leiras > table > tbody > tr > td > pre`).text();
     return nfo;
 }
 
-function parseFiles(html: string): { name: string; size: string }[] {
+export function parseFiles(html: string): { name: string; size: string }[] {
     const $ = cheerio.load(html);
 
     const tableObject = $(`body > div.torrent_leiras`).html();
@@ -20,4 +23,11 @@ function parseFiles(html: string): { name: string; size: string }[] {
     return table;
 }
 
-export { parseNfo, parseFiles };
+export function parseOtherVersions(html: string, api: API): MiniBoxTorrent[] {
+    const $ = cheerio.load(html);
+
+    return $(`#profil_right > div > div.box_torrent_all_mini`)
+        .children(".box_torrent_mini2")
+        .toArray()
+        .map((el) => new MiniBoxTorrent($(el).html(), api));
+}

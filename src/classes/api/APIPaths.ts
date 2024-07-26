@@ -117,7 +117,7 @@ class ApiPaths {
                     method: "GET",
                 };
             },
-            getOtherVersions: (id: string | number, fid: string | number): Path => {
+            getOtherVersions: (fid: string | number, id: string | number): Path => {
                 return {
                     url: new UrlQueryManager()
                         .addQuery({ action: "other_versions" })

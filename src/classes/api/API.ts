@@ -180,9 +180,9 @@ class API {
                     },
                 });
             },
-            getOtherVersions: (id: string | number, fid: string | number): ApiResponse => {
-                return fetch(this.paths.ajax.getOtherVersions(id, fid).url, {
-                    method: this.paths.ajax.getOtherVersions(id, fid).method,
+            getOtherVersions: (fid: string | number, id: string | number): ApiResponse => {
+                return fetch(this.paths.ajax.getOtherVersions(fid, id).url, {
+                    method: this.paths.ajax.getOtherVersions(fid, id).method,
                     headers: {
                         Cookie: this.#cookies.getCookiesString(),
                         "User-Agent": this.#UA,
