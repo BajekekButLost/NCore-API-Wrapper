@@ -8,6 +8,9 @@
 
 # nCore API Wrapper
 
+> [!CAUTION]
+> This package is still in beta (v0)! Until the full release most things can and probably will change so, don't build full apps around it yet!
+
 nCore API Wrapper is a library that makes it easy to communicate with nCore including searching, downloading torrents and much more.
 
 ## Features
@@ -58,6 +61,19 @@ client.on("ready", async () => {
 
 client.login(username, password); //Log in with username & password
 ```
+
+## Plans 📝
+
+-   [x] Torrent page parsing to JSON
+-   [x] Custom URL Query Manager
+-   [x] Custom Cookie Manager
+-   [x] Cookie Login
+-   [x] Communicating with `/ajax.php`
+-   [x] Ajax response parsing to JSON
+-   [x] Torrent downloading
+-   [ ] v2 Search System
+-   [ ] v1 Search System
+-   [ ] User class instead of string usernames
 
 ## Credits 🔎
 
