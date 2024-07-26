@@ -8,7 +8,7 @@
 
 # nCore API Wrapper
 
-> [!CAUTION]
+> :warning: **Warning**
 > This package is still in beta (v0)! Until the full release most things can and probably will change so, don't build full apps around it yet!
 
 nCore API Wrapper is a library that makes it easy to communicate with nCore including searching, downloading torrents and much more.
