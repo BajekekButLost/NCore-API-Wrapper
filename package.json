@@ -1,7 +1,15 @@
 {
     "name": "ncore-api-wrapper",
     "version": "0.0.1",
-    "description": "",
+    "keywords": [
+        "ncore",
+        "api",
+        "wrapper",
+        "ncore-api-wrapper",
+        "torrent",
+        "bittorrent"
+    ],
+    "description": "An ease-to-use wrapper for the non-existent nCore API",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
     "types": "dist/index.d.ts",

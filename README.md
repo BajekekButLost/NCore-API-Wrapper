@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://raw.githubusercontent.com/underctrl-io/commandkit/master/apps/docs/public/ckit_logo.svg" width="60%" />
+    <img src="./logo.png" width="60%" />
     <br />
     <!-- <a href="https://ctrl.lol/discord"><img src="https://img.shields.io/discord/1055188344188973066?color=5865F2&logo=discord&logoColor=white" alt="support server" /></a> -->
     <a href="https://www.npmjs.com/package/ncore-api-wrapper"><img src="https://img.shields.io/npm/v/ncore-api-wrapper?maxAge=3600" alt="npm version" /></a>
@@ -20,70 +20,29 @@ nCore API Wrapper is a library that makes it easy to communicate with the nCore 
 -   Easy command line interface 🖥️
 -   And much more! 🧪
 
-## Documentation
+## Documentation 📚
 
-You can find the full documentation [here](https://commandkit.js.org).
+You can find the full documentation [here](https://github.com/BajekekButLost/NCore-API-Wrapper/wiki).
 
-## Installation
+## Installation ⌨️
 
-[![npm](https://nodei.co/npm/commandkit.png)](https://nodei.co/npm/commandkit/)
+[![npm](https://nodei.co/npm/ncore-api-wrapper.png)](https://nodei.co/npm/ncore-api-wrapper/)
 
 To install nCore API Wrapper, simply run the following command:
 
 ```bash
-$ npm install ncore-api-wrapper
+npm install ncore-api-wrapper
 ```
 
-## Usage
+## Usage ❓
 
-This is a simple overview of how to set up this library with all the options. You can read more in the [full documentation](https://commandkit.js.org)
+This is a simple overview of how to set up this library with all the options. You can read more in the [full documentation](https://github.com/BajekekButLost/NCore-API-Wrapper/wiki)
 
 ```js
-// index.js
-const { Client, GatewayIntentBits } = require("discord.js");
-const { CommandKit } = require("commandkit");
-const path = require("path");
 
-const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
-    ],
-});
-
-new CommandKit({
-    // Your discord.js client object
-    client,
-
-    // Path to the commands folder
-    commandsPath: path.join(__dirname, "commands"),
-
-    // Path to the events folder
-    eventsPath: path.join(__dirname, "events"),
-
-    // Path to the validations folder (only valid if "commandsPath" was provided)
-    validationsPath: path.join(__dirname, "validations"),
-
-    // Array of development server IDs (used to register and run devOnly commands)
-    devGuildIds: ["1234567890", "0987654321"],
-
-    // Array of developer user IDs (used for devOnly commands)
-    devUserIds: ["1234567890", "0987654321"],
-
-    // Array of developer role IDs (used for devOnly commands)
-    devRoleIds: ["1234567890", "0987654321"],
-
-    // Disable CommandKit's built-in validations
-    skipBuiltInValidations: true,
-
-    // Update command registration/reload behaviour to register all commands at once
-    bulkRegister: true,
-});
-
-client.login("YOUR_TOKEN_HERE");
 ```
 
-## Support and Suggestions
+## Credits 🔎
 
-Submit any queries or suggestions in our [Discord community](https://ctrl.lol/discord).
+[UnderCtrl](https://github.com/underctrl-io) for [CommandKit](https://github.com/underctrl-io/commandkit)'s README
+[brandon93s](https://github.com/brandon93s) for [html-table-to-json](https://github.com/brandon93s/html-table-to-json)
