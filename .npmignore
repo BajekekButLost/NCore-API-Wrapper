@@ -1,0 +1,11 @@
+src/
+lib/
+node_modules/
+
+.npmignore
+.gitignore
+
+tsconfig.json
+tsup.config.ts
+
+*test*
