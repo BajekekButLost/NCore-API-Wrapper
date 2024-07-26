@@ -22,7 +22,9 @@ nCore API Wrapper is a library that makes it easy to communicate with nCore incl
 
 ## Documentation 📚
 
-You can find the full documentation [here](https://github.com/BajekekButLost/NCore-API-Wrapper/wiki).
+<!-- You can find the full documentation [here](https://github.com/BajekekButLost/NCore-API-Wrapper/wiki). -->
+
+In progress...
 
 ## Installation ⌨️
 
@@ -36,7 +38,9 @@ npm install ncore-api-wrapper
 
 ## Usage ❓
 
-This is a simple overview of how to set up this library with all the options. You can read more in the [full documentation](https://github.com/BajekekButLost/NCore-API-Wrapper/wiki)
+This is a simple overview of how to set up this library with all the options. Docs coming soon...
+
+<!-- You can read more in the [full documentation](https://github.com/BajekekButLost/NCore-API-Wrapper/wiki) -->
 
 ```js
 const nCore = require("ncore-api-wrapper");
