@@ -57,5 +57,5 @@ client.login(username, password); //Log in with username & password
 
 ## Credits 🔎
 
-**[UnderCtrl](https://github.com/underctrl-io)** for [CommandKit](https://github.com/underctrl-io/commandkit)'s README
-**[brandon93s](https://github.com/brandon93s)** for [html-table-to-json](https://github.com/brandon93s/html-table-to-json)
+-   **[UnderCtrl](https://github.com/underctrl-io)** for [CommandKit](https://github.com/underctrl-io/commandkit)'s README
+-   **[brandon93s](https://github.com/brandon93s)** for [html-table-to-json](https://github.com/brandon93s/html-table-to-json)
