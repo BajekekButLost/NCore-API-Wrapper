@@ -51,7 +51,7 @@ export type ParsedTorrent = {
         requestId?: number;
         seeders: number;
         leechers: number;
-        downloadRating: number;
+        downloaded: number;
         downloadSpeed: string;
         size: string;
         files: number;
@@ -161,7 +161,7 @@ export default function ParseTorrent(html: string): ParsedTorrent {
         requestId: propertyParser()["Kérés"] ? parseInt(propertyParser()["Kérés"]) : undefined,
         seeders: parseInt(propertyParser()["Seederek"]),
         leechers: parseInt(propertyParser()["Leecherek"]),
-        downloadRating:
+        downloaded:
             propertyParser()["Letöltve"] == "0" ? 0 : propertyParser()["Letöltve"].split(``).length,
         downloadSpeed: propertyParser()["Sebesség"].split(` `, 2).join(` `),
         size: propertyParser()["Méret"].split(` `, 2).join(` `),
@@ -255,7 +255,7 @@ export type ParsedBoxTorrent = {
     status: "checked" | "unchecked" | "err";
     uploadTime: string;
     size: string;
-    downloadRating: number;
+    downloaded: number;
     seeders: number;
     leechers: number;
     uploader: string;
@@ -319,7 +319,7 @@ export function ParseBoxTorrent(html: string): ParsedBoxTorrent {
     const uploadTime = $("div.box_nagy > div.box_feltoltve2").text().replace("\n", " ");
     const size = $("div.box_nagy > div.box_meret2").text();
 
-    const downloadRating =
+    const downloaded =
         $("div.box_nagy > div.box_d2").text() == "0"
             ? 0
             : $("div.box_nagy > div.box_d2").text().split(``).length;
@@ -336,7 +336,7 @@ export function ParseBoxTorrent(html: string): ParsedBoxTorrent {
         status,
         uploadTime,
         size,
-        downloadRating,
+        downloaded,
         seeders,
         leechers,
         uploader,
@@ -349,7 +349,7 @@ export type ParsedMiniBoxTorrent = {
     category: Category;
     uploadTime: string;
     size: string;
-    downloadRating: number;
+    downloaded: number;
     seeders: number;
     leechers: number;
 };
@@ -375,7 +375,7 @@ export function ParseMiniBoxTorrent(html: string): ParsedMiniBoxTorrent {
     const uploadTime = uploadTimeStr.substring(0, 10) + " " + uploadTimeStr.substring(10);
     //.replace("\n", " ");
     const size = $("div.box_nagy_mini > div.box_meret2").text();
-    const downloadRating =
+    const downloaded =
         $("div.box_nagy_mini > div.box_d2").text() == "0"
             ? 0
             : $("div.box_nagy_mini > div.box_d2").text().split(``).length;
@@ -387,7 +387,7 @@ export function ParseMiniBoxTorrent(html: string): ParsedMiniBoxTorrent {
         category,
         uploadTime,
         size,
-        downloadRating,
+        downloaded,
         seeders,
         leechers,
     };

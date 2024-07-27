@@ -47,7 +47,7 @@ export default class Torrent {
         requestId?: number;
         seeders: number;
         leechers: number;
-        downloadRating: number;
+        downloaded: number;
         downloadSpeed: string;
         size: string;
         files: number;
@@ -77,7 +77,7 @@ export default class Torrent {
             requestId: this.#parsed.properties.requestId,
             seeders: this.#parsed.properties.seeders,
             leechers: this.#parsed.properties.leechers,
-            downloadRating: this.#parsed.properties.downloadRating,
+            downloaded: this.#parsed.properties.downloaded,
             downloadSpeed: this.#parsed.properties.downloadSpeed,
             size: this.#parsed.properties.size,
             files: this.#parsed.properties.files,
@@ -148,7 +148,7 @@ export class MiniBoxTorrent {
     category: Category;
     uploadTime: string;
     size: string;
-    downloadRating: number;
+    downloaded: number;
     seeders: number;
     leechers: number;
     constructor(html: string, api: API) {
@@ -160,7 +160,7 @@ export class MiniBoxTorrent {
         this.category = this.#parsed.category;
         this.uploadTime = this.#parsed.uploadTime;
         this.size = this.#parsed.size;
-        this.downloadRating = this.#parsed.downloadRating;
+        this.downloaded = this.#parsed.downloaded;
         this.seeders = this.#parsed.seeders;
         this.leechers = this.#parsed.leechers;
     }
