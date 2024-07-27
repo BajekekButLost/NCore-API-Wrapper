@@ -1,6 +1,6 @@
 {
     "name": "ncore-api-wrapper",
-    "version": "0.0.1-beta",
+    "version": "0.0.3-beta",
     "keywords": [
         "ncore",
         "api",
@@ -17,15 +17,22 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "tsup"
     },
+    "homepage": "https://github.com/BajekekButLost/NCore-API-Wrapper",
+    "repository": {
+        "url": "https://github.com/BajekekButLost/NCore-API-Wrapper"
+    },
+    "bugs": {
+        "url": "https://github.com/BajekekButLost/NCore-API-Wrapper/issues"
+    },
     "author": "Bajekek",
-    "license": "ISC",
+    "license": "MIT",
     "dependencies": {
-        "@types/events": "^3.0.3",
-        "@types/node": "^20.14.12",
         "cheerio": "^1.0.0-rc.12",
         "node-fetch": "^2.7.0"
     },
     "devDependencies": {
+        "@types/events": "^3.0.3",
+        "@types/node": "^20.14.12",
         "@types/node-fetch": "^2.6.11",
         "tsup": "^8.2.3",
         "typescript": "^5.5.4"
