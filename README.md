@@ -55,9 +55,7 @@ const client = new nCore.Client({
 client.on("ready", async () => {
     const torrent = await client.getTorrent(1490740);
     console.log(torrent.title); //Le.fabuleux.destin.d.Amelie.Poulain.2001.1080p.BluRay.DD5.1.x264.HuN-LiLBOX
-    const output = require("fs")
-        .createWriteStream("Amelie csodálatos élete.torrent")(await torrent.download())
-        .pipe(output); //Download torrent
+    await torrent.download("Amelie csodálatos élete.torrent"); //Downloads torrent and creates a file with the specified path
 });
 
 client.login(username, password); //Log in with username & password
