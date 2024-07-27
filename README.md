@@ -4,6 +4,7 @@
     <!-- <a href="https://ctrl.lol/discord"><img src="https://img.shields.io/discord/1055188344188973066?color=5865F2&logo=discord&logoColor=white" alt="support server" /></a> -->
     <a href="https://www.npmjs.com/package/ncore-api-wrapper"><img src="https://img.shields.io/npm/v/ncore-api-wrapper?maxAge=3600" alt="npm version" /></a>
     <a href="https://www.npmjs.com/package/ncore-api-wrapper"><img src="https://img.shields.io/npm/dt/ncore-api-wrapper?maxAge=3600" alt="npm downloads" /></a>
+    <a href="https://paypal.me/bajekek"><img src="https://img.shields.io/badge/donate_on-Paypal-blue?logo=paypal" alt="paypal donate" /></a>
 </div>
 
 # nCore API Wrapper
