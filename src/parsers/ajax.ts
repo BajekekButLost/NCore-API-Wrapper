@@ -1,7 +1,6 @@
 import * as cheerio from "cheerio";
 import HtmlTableToJson from "../helpers/HtmlTableToJson";
-import { Category, MiniBoxTorrent } from "../classes/Torrent";
-import { ParsedMiniBoxTorrent, ParseMiniBoxTorrent } from "./torrent";
+import { MiniBoxTorrent } from "../classes/Torrent";
 import API from "../classes/api/API";
 
 export function parseNfo(html: string): string {

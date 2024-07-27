@@ -4,7 +4,6 @@ import * as cheerio from "cheerio";
  * Full credit to brandon93s' html-table-to-json package on npm!
  * brandon93s: https://www.npmjs.com/~brandon93s
  * html-table-to-json: https://www.npmjs.com/package/html-table-to-json
- * Ty brandon, love from bajekek!
  */
 
 class HtmlTableToJson {

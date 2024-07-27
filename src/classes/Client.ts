@@ -3,7 +3,9 @@ import { Cookie, CookieManager } from "./api/Cookies";
 import { EventEmitter } from "events";
 import nCoreAPI from "./api/API";
 import * as parser from "../parsers/v1search";
-import Torrent from "./Torrent";
+import Torrent, { BoxTorrent } from "./Torrent";
+import v1Search from "./search/v1Search";
+import v2Search from "./search/v2Search";
 
 interface ClientOptions {
     userAgent: string;
@@ -69,7 +71,18 @@ type UserInfo = {
     invites: number;
 };
 
-class nCoreClient extends EventEmitter {
+type SearchResults = BoxTorrent[];
+
+interface ClientEvents {
+    ready: (client: nCoreClient) => void;
+}
+
+export declare interface nCoreClient {
+    on<U extends keyof ClientEvents>(event: U, listener: ClientEvents[U]): this;
+    emit<U extends keyof ClientEvents>(event: U, ...args: Parameters<ClientEvents[U]>): boolean;
+}
+
+export class nCoreClient extends EventEmitter {
     #api: nCoreAPI;
     #cookies: CookieManager;
     #trackerKey: undefined | string;
@@ -175,12 +188,13 @@ class nCoreClient extends EventEmitter {
         return new Torrent(await (await this.#api.torrent().details(id)).text(), this.#api);
     }
 
-    // /**
-    //  *
-    //  * @param {string} search
-    //  * @returns {Promise<Torrent[]>}
-    //  */
-    // async search(search) {}
+    // async search(search: v1Search | v2Search): Promise<SearchResults> {
+    //     if (search instanceof v1Search) {
+    //         //const res = await this.#api.search.v1(search.query);
+    //         //return parser.parseV1Search(await res.text());
+    //     } else if (search instanceof v2Search) {
+    //         // const res = await this.#api.search.v2(search.query);
+    //         // return parser.parseV2Search(await res.text());
+    //     }
+    // }
 }
-
-export default nCoreClient;

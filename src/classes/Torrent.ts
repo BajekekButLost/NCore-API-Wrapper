@@ -1,3 +1,4 @@
+import { createWriteStream, readFileSync } from "fs";
 import { parseFiles, parseNfo, parseOtherVersions } from "../parsers/ajax";
 import {
     ParseBoxTorrent,
@@ -110,9 +111,14 @@ export default class Torrent {
         this.thanks = this.#parsed.thanks;
     }
 
-    async download(): Promise<NodeJS.ReadableStream> {
-        const res = await this.#api.torrent().download(this.id, this.#parsed.trackerKey);
-        return res.body;
+    async download(path: string = "ncore.torrent"): Promise<Buffer> {
+        return new Promise(async (resolve, reject) => {
+            const res = await this.#api.torrent().download(this.id, this.#parsed.trackerKey);
+            const file = createWriteStream(path);
+            if (res.status !== 200) reject(res.statusText);
+            res.body.pipe(file).on("finish", () => resolve(readFileSync(path)));
+            file.on("error", (err) => reject(err));
+        });
     }
 
     async thank(): Promise<boolean> {

@@ -1,19 +1,5 @@
+import { v2SearchCategories } from "../search/v2Search";
 import UrlQueryManager from "./UrlQueryManager";
-
-export type v2SearchCategories =
-    | "Movies"
-    | "Series"
-    | "Music"
-    | "Games"
-    | "Ebooks"
-    | "Apps"
-    | "Adult";
-
-export type v2SearchOptions = {
-    categories: v2SearchCategories[];
-    query: string;
-    page: number;
-};
 
 type Path = { url: string; method: string };
 
@@ -37,7 +23,7 @@ class ApiPaths {
         return { url: "https://ncore.pro/api/v2/auth", method: "GET" };
     }
 
-    torrents(options: v2SearchOptions): Path {
+    torrents(options: { categories: v2SearchCategories[]; query: string; page: number }): Path {
         const categories = options.categories.map((c) => {
             if (c.toLowerCase() === "movies") return 1;
             if (c.toLowerCase() === "series") return 2;
@@ -141,8 +127,5 @@ class ApiPaths {
         };
     }
 }
-
-// const q = new ApiPaths();
-// console.log(q.torrents({ categories: ["Games"], query: "spider-man", page: 1 }));
 
 export default ApiPaths;

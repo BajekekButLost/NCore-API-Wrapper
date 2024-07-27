@@ -1,7 +1,8 @@
 import fetch, { Response } from "node-fetch";
 import { CookieManager } from "./Cookies";
-import ApiPaths, { v2SearchCategories } from "./APIPaths";
+import ApiPaths from "./APIPaths";
 import { version } from "../../../package.json";
+import { v2SearchCategories } from "../search/v2Search";
 
 type ApiResponse = Promise<Response>;
 
