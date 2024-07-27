@@ -46,8 +46,11 @@ This is a simple overview of how to set up this library with all the options. Do
 
 <!-- You can read more in the [full documentation](https://github.com/BajekekButLost/NCore-API-Wrapper/wiki) -->
 
+#### Normal Usage
+
 ```js
 const nCore = require("ncore-api-wrapper");
+const { username, password } = require("./config");
 const client = new nCore.Client({
     cookies: new nCore.CookieManager().addCookiesFromString("Your Cookies"), //Log in with cookies
 });
@@ -59,6 +62,32 @@ client.on("ready", async () => {
 });
 
 client.login(username, password); //Log in with username & password
+```
+
+#### Compact Usage
+
+```js
+const { Client } = require("ncore-api-wrapper");
+const { username, password } = require("./config");
+new Client()
+    .on("ready", async (client) => {
+        console.log((await client.getTorrent(1490740)).title); //Le.fabuleux.destin.d.Amelie.Poulain.2001.1080p.BluRay.DD5.1.x264.HuN-LiLBOX
+    })
+    .login(username, password); //Log in with username & password
+```
+
+#### Async Usage
+
+```js
+const { Client } = require("ncore-api-wrapper");
+const { username, password } = require("./config");
+
+(async () => {
+    const client = await new Client().login(username, password); //Log in with username & password
+
+    const torrent = await client.getTorrent(1490740); //Get torrent by ID
+    console.log(torrent.title); //Le.fabuleux.destin.d.Amelie.Poulain.2001.1080p.BluRay.DD5.1.x264.HuN-LiLBOX
+})();
 ```
 
 ## Plans 📝
@@ -78,3 +107,7 @@ client.login(username, password); //Log in with username & password
 
 -   **[UnderCtrl](https://github.com/underctrl-io)** for [CommandKit](https://github.com/underctrl-io/commandkit)'s README
 -   **[brandon93s](https://github.com/brandon93s)** for [html-table-to-json](https://github.com/brandon93s/html-table-to-json)
+
+```
+
+```
